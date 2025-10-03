@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediCare Pro - Healthcare Management System</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-heartbeat"></i>
+                <span>MediCare Pro</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#" data-module="dashboard" class="nav-link active">Dashboard</a></li>
+                <li><a href="#" data-module="image-analysis" class="nav-link">Image Analysis</a></li>
+                <li><a href="#" data-module="disease-tracking" class="nav-link">Disease Tracking</a></li>
+                <li><a href="#" data-module="drug-recommendations" class="nav-link">Drug Recommendations</a></li>
+                <li><a href="#" data-module="cost-estimation" class="nav-link">Cost Estimation</a></li>
+                <li><a href="#" data-module="reports" class="nav-link">Reports</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="main-content">
+        <!-- Dashboard Module -->
+        <div id="dashboard" class="module active">
+            <div class="container">
+                <div class="module-header">
+                    <h1>Healthcare Management Dashboard</h1>
+                    <p>Access comprehensive medical tools and patient management features</p>
+                </div>
+                
+                <div class="dashboard-grid">
+                    <div class="dashboard-card" data-module="image-analysis">
+                        <div class="card-icon">
+                            <i class="fas fa-x-ray"></i>
+                        </div>
+                        <h3>Medical Image Analysis</h3>
+                        <p>AI-powered analysis of chest X-rays and brain MRI scans for disease detection</p>
+                        <div class="card-stats">
+                            <span class="stat-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>95% Accuracy</span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-card" data-module="disease-tracking">
+                        <div class="card-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Disease Progression Tracker</h3>
+                        <p>Monitor patient progression and predict future disease development trends</p>
+                        <div class="card-stats">
+                            <span class="stat-item">
+                                <i class="fas fa-users"></i>
+                                <span>Patient Monitoring</span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-card" data-module="drug-recommendations">
+                        <div class="card-icon">
+                            <i class="fas fa-pills"></i>
+                        </div>
+                        <h3>Drug Recommendation System</h3>
+                        <p>Get medication suggestions and check for dangerous drug interactions</p>
+                        <div class="card-stats">
+                            <span class="stat-item">
+                                <i class="fas fa-shield-alt"></i>
+                                <span>Safety Checked</span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-card" data-module="cost-estimation">
+                        <div class="card-icon">
+                            <i class="fas fa-calculator"></i>
+                        </div>
+                        <h3>Cost Prediction System</h3>
+                        <p>Estimate healthcare costs and insurance coverage for medical procedures</p>
+                        <div class="card-stats">
+                            <span class="stat-item">
+                                <i class="fas fa-dollar-sign"></i>
+                                <span>Cost Analysis</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Image Analysis Module -->
+        <div id="image-analysis" class="module">
+            <div class="container">
+                <div class="module-header">
+                    <h2>Medical Image Analysis</h2>
+                    <p>Upload and analyze medical images using AI-powered diagnostics</p>
+                </div>
+
+                <div class="analysis-container">
+                    <div class="upload-section">
+                        <div class="upload-area" id="upload-area">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <h3>Upload Medical Image</h3>
+                            <p>Drag & drop or click to upload chest X-ray or brain MRI</p>
+                            <input type="file" id="image-input" accept="image/*" hidden>
+                            <button class="btn btn--primary" onclick="document.getElementById('image-input').click()">
+                                Choose File
+                            </button>
+                        </div>
+                        
+                        <div class="image-preview" id="image-preview" style="display: none;">
+                            <img id="preview-img" alt="Preview">
+                            <div class="image-info">
+                                <span id="image-name"></span>
+                                <button class="btn btn--secondary" onclick="removeImage()">Remove</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="analysis-results" id="analysis-results" style="display: none;">
+                        <div class="results-header">
+                            <h3>Analysis Results</h3>
+                            <div class="confidence-score">
+                                <span>Confidence: </span>
+                                <span id="confidence-value">0%</span>
+                            </div>
+                        </div>
+                        
+                        <div class="diagnosis-card">
+                            <div class="diagnosis-info">
+                                <h4 id="diagnosis-title">Diagnosis</h4>
+                                <p id="diagnosis-description">Analysis results will appear here</p>
+                            </div>
+                            <div class="severity-indicator">
+                                <span class="status" id="severity-status">Normal</span>
+                            </div>
+                        </div>
+
+                        <div class="analysis-actions">
+                            <button class="btn btn--primary" onclick="generateReport()">
+                                <i class="fas fa-file-medical"></i>
+                                Generate Report
+                            </button>
+                            <button class="btn btn--secondary" onclick="analyzeAnother()">
+                                Analyze Another
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Disease Tracking Module -->
+        <div id="disease-tracking" class="module">
+            <div class="container">
+                <div class="module-header">
+                    <h2>Disease Progression Tracker</h2>
+                    <p>Monitor patient progression and predict future trends</p>
+                </div>
+
+                <div class="tracking-controls">
+                    <div class="patient-selector">
+                        <label class="form-label">Select Patient:</label>
+                        <select id="patient-select" class="form-control">
+                            <option value="">Choose a patient</option>
+                        </select>
+                    </div>
+                    <button class="btn btn--primary" onclick="loadPatientData()">Load Data</button>
+                </div>
+
+                <div class="tracking-content" id="tracking-content" style="display: none;">
+                    <div class="patient-info" id="patient-info">
+                        <!-- Patient details will be populated here -->
+                    </div>
+
+                    <div class="chart-container" style="position: relative; height: 400px;">
+                        <canvas id="progression-chart"></canvas>
+                    </div>
+
+                    <div class="progression-actions">
+                        <button class="btn btn--secondary" onclick="addDataPoint()">Add Data Point</button>
+                        <button class="btn btn--primary" onclick="predictProgression()">Predict Future</button>
+                    </div>
+
+                    <div class="prediction-results" id="prediction-results" style="display: none;">
+                        <h3>Progression Prediction</h3>
+                        <div class="prediction-card">
+                            <div class="prediction-info">
+                                <span class="prediction-label">Next 3 Months:</span>
+                                <span class="prediction-value" id="prediction-value">Stable progression expected</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Drug Recommendations Module -->
+        <div id="drug-recommendations" class="module">
+            <div class="container">
+                <div class="module-header">
+                    <h2>Drug Recommendation System</h2>
+                    <p>Get medication suggestions and check for drug interactions</p>
+                </div>
+
+                <div class="drug-search">
+                    <div class="search-container">
+                        <label class="form-label">Enter Disease or Condition:</label>
+                        <input type="text" id="disease-input" class="form-control" placeholder="Type disease name (e.g., pneumonia, diabetes)">
+                        <button class="btn btn--primary" onclick="searchDrugs()">
+                            <i class="fas fa-search"></i>
+                            Search Medications
+                        </button>
+                    </div>
+                </div>
+
+                <div class="drug-results" id="drug-results" style="display: none;">
+                    <div class="results-section">
+                        <h3>Recommended Medications</h3>
+                        <div class="drug-list" id="recommended-drugs">
+                            <!-- Drug recommendations will appear here -->
+                        </div>
+                    </div>
+
+                    <div class="interaction-checker">
+                        <h3>Drug Interaction Checker</h3>
+                        <div class="selected-drugs" id="selected-drugs">
+                            <p>Select medications to check for interactions</p>
+                        </div>
+                        <button class="btn btn--secondary" onclick="checkInteractions()">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            Check Interactions
+                        </button>
+                    </div>
+
+                    <div class="interaction-results" id="interaction-results" style="display: none;">
+                        <!-- Interaction warnings will appear here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cost Estimation Module -->
+        <div id="cost-estimation" class="module">
+            <div class="container">
+                <div class="module-header">
+                    <h2>Healthcare Cost Prediction</h2>
+                    <p>Estimate medical costs based on patient demographics and procedure type</p>
+                </div>
+
+                <div class="cost-form">
+                    <div class="form-sections">
+                        <div class="form-section">
+                            <h3>Patient Information</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Age</label>
+                                    <input type="number" id="patient-age" class="form-control" min="1" max="120" placeholder="Age">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Gender</label>
+                                    <select id="patient-gender" class="form-control">
+                                        <option value="">Select Gender</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">BMI</label>
+                                    <input type="number" id="patient-bmi" class="form-control" step="0.1" placeholder="BMI">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Children</label>
+                                    <input type="number" id="patient-children" class="form-control" min="0" placeholder="Number of children">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Smoking Status</label>
+                                    <select id="patient-smoking" class="form-control">
+                                        <option value="">Select</option>
+                                        <option value="yes">Yes</option>
+                                        <option value="no">No</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Region</label>
+                                    <select id="patient-region" class="form-control">
+                                        <option value="">Select Region</option>
+                                        <option value="northeast">Northeast</option>
+                                        <option value="northwest">Northwest</option>
+                                        <option value="southeast">Southeast</option>
+                                        <option value="southwest">Southwest</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <h3>Procedure Details</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Procedure Type</label>
+                                    <select id="procedure-type" class="form-control">
+                                        <option value="">Select Procedure</option>
+                                        <option value="X-ray_Pneumonia">X-ray Analysis (Pneumonia)</option>
+                                        <option value="MRI_Brain_Tumor">MRI Brain Scan (Tumor)</option>
+                                        <option value="General_Checkup">General Health Checkup</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Severity Level</label>
+                                    <select id="severity-level" class="form-control">
+                                        <option value="">Select Severity</option>
+                                        <option value="Low">Low</option>
+                                        <option value="Medium">Medium</option>
+                                        <option value="High">High</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Complexity</label>
+                                    <select id="complexity-level" class="form-control">
+                                        <option value="">Select Complexity</option>
+                                        <option value="Basic">Basic</option>
+                                        <option value="Intermediate">Intermediate</option>
+                                        <option value="Complex">Complex</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Hospital Type</label>
+                                    <select id="hospital-type" class="form-control">
+                                        <option value="">Select Hospital</option>
+                                        <option value="Public">Public Hospital</option>
+                                        <option value="Private">Private Hospital</option>
+                                        <option value="Specialty">Specialty Center</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cost-actions">
+                        <button class="btn btn--primary" onclick="calculateCost()">
+                            <i class="fas fa-calculator"></i>
+                            Calculate Cost
+                        </button>
+                        <button class="btn btn--secondary" onclick="clearCostForm()">Clear Form</button>
+                    </div>
+                </div>
+
+                <div class="cost-results" id="cost-results" style="display: none;">
+                    <div class="cost-breakdown">
+                        <h3>Cost Estimation</h3>
+                        <div class="cost-summary">
+                            <div class="total-cost">
+                                <span class="cost-label">Estimated Total Cost:</span>
+                                <span class="cost-value" id="total-cost">₹0</span>
+                            </div>
+                        </div>
+                        
+                        <div class="cost-details">
+                            <h4>Cost Breakdown</h4>
+                            <div class="breakdown-item">
+                                <span>Base Procedure Cost:</span>
+                                <span id="base-cost">₹0</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span>Severity Adjustment:</span>
+                                <span id="severity-cost">₹0</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span>Complexity Adjustment:</span>
+                                <span id="complexity-cost">₹0</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span>Hospital Type Adjustment:</span>
+                                <span id="hospital-cost">₹0</span>
+                            </div>
+                        </div>
+
+                        <div class="insurance-info">
+                            <h4>Insurance Estimation</h4>
+                            <div class="insurance-coverage">
+                                <span>Estimated Coverage (70%):</span>
+                                <span id="insurance-coverage">₹0</span>
+                            </div>
+                            <div class="out-of-pocket">
+                                <span>Out of Pocket:</span>
+                                <span id="out-of-pocket">₹0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reports Module -->
+        <div id="reports" class="module">
+            <div class="container">
+                <div class="module-header">
+                    <h2>Medical Reports</h2>
+                    <p>View and manage generated diagnostic reports</p>
+                </div>
+
+                <div class="reports-container">
+                    <div class="reports-list" id="reports-list">
+                        <div class="no-reports">
+                            <i class="fas fa-file-medical-alt"></i>
+                            <h3>No Reports Available</h3>
+                            <p>Generate reports from the Image Analysis module to view them here.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay" style="display: none;">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <p id="loading-text">Processing...</p>
+        </div>
+    </div>
+
+    <!-- Modal for Reports -->
+    <div id="report-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Medical Report</h3>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="report-content">
+                <!-- Report content will be populated here -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn--secondary" onclick="closeModal()">Close</button>
+                <button class="btn btn--primary" onclick="printReport()">Print Report</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
